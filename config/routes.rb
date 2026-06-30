@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -15,13 +14,13 @@ Rails.application.routes.draw do
 
   root "questions#index"
 
-  resources :questions, only: [:index, :show, :new, :create, :destroy] do
+  resources :questions, only: [ :index, :show, :new, :create, :destroy ] do
     patch :close, on: :member
   end
 
   namespace :lawyer do
-    resources :questions, only: [:index, :show] do
-      resources :answers, only: [:create]
+    resources :questions, only: [ :index, :show ] do
+      resources :answers, only: [ :create ]
     end
   end
 

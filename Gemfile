@@ -66,5 +66,3 @@ group :test do
 end
 
 gem "faker", "~> 3.8", groups: [:development, :test]
-
-
