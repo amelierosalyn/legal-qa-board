@@ -1,0 +1,16 @@
+<% existing_answers = question.answers.select(&:persisted?) %>
+
+<% if existing_answers.any? %>
+  <ul>
+    <% existing_answers.each do |answer| %>
+      <li>
+        <%= answer.lawyer.name %> proposed
+        <%= number_to_currency(answer.fee_in_pounds, unit: "£") %>
+        —
+        <%= answer.paid? ? "Paid" : "Awaiting payment" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No responses yet.</p>
+<% end %>

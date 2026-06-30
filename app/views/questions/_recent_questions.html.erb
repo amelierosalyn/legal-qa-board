@@ -1,0 +1,9 @@
+<% if recent_questions&.any? %>
+  <ul>
+    <% recent_questions.each do |question| %>
+      <%= render "question", question: question, dom_id_prefix: dom_id_prefix %>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No questions yet.</p>
+<% end %>

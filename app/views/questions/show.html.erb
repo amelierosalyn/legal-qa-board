@@ -1,0 +1,27 @@
+<h1><%= @question.title %></h1>
+
+<p>
+  <strong>Category:</strong>
+  <%= @question.category %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @question.status.humanize %>
+</p>
+
+<p>
+  <%= simple_format(@question.body) %>
+</p>
+
+<h2>Lawyer responses</h2>
+
+<% if @question.answers.any? %>
+  <% @question.answers.each do |answer| %>
+    <%= turbo_frame_tag dom_id(answer, :payment) do %>
+      <%= render "lawyer/answers/payment_state", answer: answer %>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>No lawyer has answered this question yet.</p>
+<% end %>

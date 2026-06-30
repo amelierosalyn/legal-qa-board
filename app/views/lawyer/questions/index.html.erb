@@ -1,0 +1,17 @@
+<h1>Open questions</h1>
+
+<% if @questions.any? %>
+  <ul>
+    <% @questions.each do |question| %>
+      <li>
+        <%= link_to question.title, lawyer_question_path(question, as: "lawyer") %>
+        —
+        <%= question.category %>
+        —
+        asked by <%= question.user.name %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No open questions.</p>
+<% end %>

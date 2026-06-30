@@ -1,0 +1,10 @@
+<li id="<%= dom_id(question, dom_id_prefix) if local_assigns[:dom_id_prefix].present? %>">
+  <%= question.category.titleize %> &gt; <%= link_to question.title, question_path(question) %><br>
+  <strong><%= question.status.titleize %></strong><br>
+  <% if question.user == current_user && question.open? %>
+    <%= button_to "Delete",
+      question_path(question),
+      method: :delete,
+      data: { turbo_confirm: "Are you sure?" } %>
+  <% end %>
+</li>
