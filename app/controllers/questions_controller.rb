@@ -23,17 +23,6 @@ class QuestionsController < ApplicationController
         format.html do
           redirect_to @question, notice: "Question submitted."
         end
-
-        # format.turbo_stream do
-        #   render turbo_stream: [
-        #     turbo_stream.replace(
-        #       "recent_questions",
-        #       partial: "questions/recent_questions",
-        #       locals: { recent_questions: Question.includes(:user).order(created_at: :desc).limit(10) }
-        #     ),
-        #     turbo_stream.action(:redirect, question_path(@question))ß
-        #   ]
-        # end
       end
     else
       render :new, status: :unprocessable_entity
@@ -57,7 +46,7 @@ class QuestionsController < ApplicationController
   end
 
   def close
-    @question.close!
+    @question.closed!
 
     respond_to do |format|
       format.html { redirect_to questions_path, notice: "Question closed." }

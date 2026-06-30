@@ -30,10 +30,12 @@
       <%= link_to "Lawyer view", lawyer_questions_path(as: "lawyer") %>
     </nav>
 
-  <% if notice.present? %>
-    <p class="notice"><%= notice %></p>
-  <% end %>
+    <main>
+      <% if notice.present? %>
+        <p class="notice"><%= notice %></p>
+      <% end %>
 
-  <%= yield %>
+      <%= yield %>
+    </main>
   </body>
 </html>

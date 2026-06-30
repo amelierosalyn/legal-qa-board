@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
+    # Temporary override to get around not having a proper login system
+    # TODO: Implement a proper login system
     email = params[:as] == "lawyer" ? "lawyer@example.com" : "client@example.com"
     @current_user ||= User.find_by!(email:)
   end

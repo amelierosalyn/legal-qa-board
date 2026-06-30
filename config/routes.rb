@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
   root "questions#index"
 
-  resources :questions, only: [:index, :show, :new, :create, :destroy]
+  resources :questions, only: [:index, :show, :new, :create, :destroy] do
+    patch :close, on: :member
+  end
 
   namespace :lawyer do
     resources :questions, only: [:index, :show] do

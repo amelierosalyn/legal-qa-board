@@ -8,12 +8,21 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
 
   validates :title, :body, :category, :status, presence: true
+  validates :category, inclusion: { in: CATEGORIES }
 
   after_initialize :set_status_to_open, if: :new_record?
+
+  def answers_pending?
+    pending_answers_count.positive?
+  end
 
   private
 
   def set_status_to_open
     self.status = :open
+  end
+
+  def pending_answers_count
+    answers.joins(:payment_request).merge(PaymentRequest.pending).count
   end
 end
