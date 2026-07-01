@@ -1,13 +1,13 @@
 <h1><%= @question.title %></h1>
 
 <p>
-  <strong>Category:</strong>
-  <%= @question.category %>
+  <strong>Asked by:</strong>
+  <%= @question.user.name %> on <%= @question.created_at.strftime("%d %B %Y %H:%M") %>
 </p>
 
 <p>
-  <strong>Asked by:</strong>
-  <%= @question.user.name %>
+  <strong>Category:</strong>
+  <%= @question.category.titleize %>
 </p>
 
 <p>
@@ -16,7 +16,7 @@
 
 <h2>Submit paid advice</h2>
 
-<%= form_with model: [:lawyer, @question, @answer] do |form| %>
+<%= form_with model: [:lawyer, @question, @answer], url: lawyer_question_answers_path(@question, as: "lawyer") do |form| %>
   <% if @answer.errors.any? %>
     <div>
       <h3><%= pluralize(@answer.errors.count, "error") %> prevented this answer from being saved:</h3>
@@ -35,8 +35,8 @@
   </div>
 
   <div>
-    <%= form.label :proposed_fee_pence, "Fee in pence" %><br>
-    <%= form.number_field :proposed_fee_pence, min: 1, step: 1 %>
+    <%= form.label :proposed_fee_pounds, "Fee (£)" %><br>
+    <%= form.number_field :proposed_fee_pounds, min: 0.01, step: 0.01%>
   </div>
 
   <div>

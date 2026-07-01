@@ -9,4 +9,11 @@ module Lawyer
       @answer = @question.answers.build
     end
   end
+
+  private
+  def check_user_is_lawyer
+    unless current_user&.lawyer?
+      redirect_to root_path, alert: "You must be a lawyer to view this page."
+    end
+  end
 end

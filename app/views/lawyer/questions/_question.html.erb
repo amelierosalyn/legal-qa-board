@@ -1,0 +1,11 @@
+<li>
+  <%= question.category.titleize %> &gt; <strong><%= link_to question.title, lawyer_question_path(question, as: "lawyer") %></strong><br>
+  asked by <%= question.user.name %> on <%= question.created_at.strftime("%d %B %Y at %H:%M") %><br>
+
+  <span class="actions">
+    <%= button_to "View",
+                  lawyer_question_path(question, as: "lawyer"),
+                  method: :get,
+                  data: { turbo_frame: "_top" } %>
+  </span>
+</li>

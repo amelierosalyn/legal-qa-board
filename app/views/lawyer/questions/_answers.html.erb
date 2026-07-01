@@ -4,7 +4,7 @@
   <ul>
     <% existing_answers.each do |answer| %>
       <li>
-        <%= answer.lawyer.name %> proposed
+        <%= answer.lawyer.name %> answered on <%= answer.created_at.strftime("%d %B %Y %H:%M") %>. Fee:
         <%= number_to_currency(answer.fee_in_pounds, unit: "£") %>
         —
         <%= answer.paid? ? "Paid" : "Awaiting payment" %>

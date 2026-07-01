@@ -1,9 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :get_question, only: [ :show, :destroy, :close ]
-  # before_action :get_questions, only: [ :index ]
 
   def index
-    @recent_questions = Question.includes(:user).order(created_at: :desc).limit(10)
     @my_questions = current_user.questions.order(created_at: :desc)
   end
 
@@ -21,7 +19,7 @@ class QuestionsController < ApplicationController
     if @question.save
       respond_to do |format|
         format.html do
-          redirect_to @question, notice: "Question submitted."
+          redirect_to questions_path, notice: "Question submitted."
         end
       end
     else
@@ -31,16 +29,21 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = current_user.questions.find(params[:id])
-    @question.destroy
 
-    respond_to do |format|
-      format.html { redirect_to questions_path, notice: "Question deleted." }
+    if @question.destroy
+      respond_to do |format|
+        format.html { redirect_to questions_path, notice: "Question deleted." }
 
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.remove(helpers.dom_id(@question, :my)),
-          turbo_stream.remove(helpers.dom_id(@question, :recent))
-        ]
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.remove(helpers.dom_id(@question, :my))
+          ]
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to questions_path, alert: "Question could not be deleted." }
+        format.turbo_stream { head :unprocessable_entity }
       end
     end
   end
@@ -57,14 +60,14 @@ class QuestionsController < ApplicationController
             helpers.dom_id(@question, :my),
             partial: "questions/question",
             locals: { question: @question, dom_id_prefix: :my }
-          ),
-          turbo_stream.replace(
-            helpers.dom_id(@question, :recent),
-            partial: "questions/question",
-            locals: { question: @question, dom_id_prefix: :recent }
           )
         ]
       end
+    end
+  rescue ActiveRecord::RecordInvalid # didn't save
+    respond_to do |format|
+      format.html { redirect_to questions_path, alert: "Question could not be closed." }
+      format.turbo_stream { head :unprocessable_entity }
     end
   end
 

@@ -1,14 +1,14 @@
-<h1>Legal Advice Q&A Board</h1>
+<h1>Legal Advice Q&amp;A Board</h1>
 
 <p>
-  Ask legal questions and receive paid advice from verified lawyers.
+  Ask legal questions and receive paid advice from legal professionals.
 </p>
 
 <p>
   <%= button_to "Submit a legal question", new_question_path, method: :get %>
 </p>
 
-<h2>Your questions</h2>
+<h2>Your recent questions</h2>
 
 <%= turbo_frame_tag "my_questions" do %>
   <% if @my_questions.any? %>
@@ -20,10 +20,4 @@
   <% else %>
     <p>You have not submitted any questions yet.</p>
   <% end %>
-<% end %>
-
-<h2>Recent questions</h2>
-
-<%= turbo_frame_tag "recent_questions" do %>
-  <%= render "questions/recent_questions", recent_questions: @recent_questions, dom_id_prefix: :recent %>
 <% end %>

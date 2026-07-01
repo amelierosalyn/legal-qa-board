@@ -9,16 +9,8 @@ module Lawyer
       if @answer.save
         respond_to do |format|
           format.html do
-            redirect_to lawyer_question_path(@question, as: "lawyer"),
+            redirect_to lawyer_questions_path(@question, as: "lawyer"),
                         notice: "Answer submitted and payment request sent."
-          end
-
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace(
-              "question_answers",
-              partial: "lawyer/questions/answers",
-              locals: { question: @question.reload }
-            )
           end
         end
       else
@@ -29,7 +21,13 @@ module Lawyer
     private
 
     def answer_params
-      params.require(:answer).permit(:response_text, :proposed_fee_pence)
+      params.require(:answer).permit(:response_text, :proposed_fee_pounds)
+    end
+
+    def check_user_is_lawyer
+      unless current_user&.lawyer?
+        redirect_to root_path, alert: "You must be a lawyer to submit an answer."
+      end
     end
   end
 end

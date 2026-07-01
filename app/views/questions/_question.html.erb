@@ -1,10 +1,14 @@
-<li id="<%= dom_id(question, dom_id_prefix) if local_assigns[:dom_id_prefix].present? %>">
-  <%= question.category.titleize %> &gt; <%= link_to question.title, question_path(question), data: { turbo_frame: "_top" } %><br>
+<li class="question_<%= question.status %>" id="<%= dom_id(question, dom_id_prefix) if local_assigns[:dom_id_prefix].present? %>">
+  <%= question.category.titleize %> &gt; <strong><%= link_to question.title, question_path(question), data: { turbo_frame: "_top" } %></strong><br>
   <strong><%= question.status.titleize %></strong>
-  <% if current_user_question?(question) && question.answers_pending? %> — <%= pluralize(question.answers.count, "answer") %> awaiting approval<% end %>
+  <% if current_user_question?(question) && question.answers_pending? %> — <%= pluralize(question.pending_answers_count, "answer") %> awaiting approval<% end %>
   <br>
 
   <span class="actions">
+    <%= button_to "View",
+                  question_path(question),
+                  method: :get,
+                  data: { turbo_frame: "_top" } %>
     <% if current_user_question?(question) && question.open? %>
       <%= button_to "Close",
         close_question_path(question),

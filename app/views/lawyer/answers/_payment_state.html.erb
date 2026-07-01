@@ -1,14 +1,14 @@
 <article>
   <p>
     <strong><%= answer.lawyer.name %></strong>
-    proposed a fee of
+    answered on <%= answer.created_at.strftime("%d %B %Y at %H:%M") %> and proposed a fee of
     <strong><%= number_to_currency(answer.fee_in_pounds, unit: "£") %></strong>
   </p>
 
   <% if answer.paid? %>
     <%= simple_format(answer.response_text) %>
   <% else %>
-    <p>This answer is locked until payment is approved.</p>
+    <p>Approve payment to view this answer.</p>
 
     <% if answer.payment_request.pending? %>
       <%= button_to "Approve payment",

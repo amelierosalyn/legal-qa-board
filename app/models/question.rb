@@ -16,13 +16,13 @@ class Question < ApplicationRecord
     pending_answers_count.positive?
   end
 
+  def pending_answers_count
+    answers.joins(:payment_request).merge(PaymentRequest.pending).count
+  end
+
   private
 
   def set_status_to_open
     self.status = :open
-  end
-
-  def pending_answers_count
-    answers.joins(:payment_request).merge(PaymentRequest.pending).count
   end
 end

@@ -171,17 +171,14 @@ a:hover {
   font-weight: 600;
 }
 
-.status-open {
+.question_open {
   background: #dbeafe;
-  color: #1d4ed8;
 }
 
-.status-answered {
+.question_answered {
   background: #dcfce7;
-  color: #166534;
 }
 
-.status-closed {
+.question_closed {
   background: #e5e7eb;
-  color: #374151;
 }
