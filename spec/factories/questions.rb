@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :question do
     association :user
-    sequence(:title) { |n| "Question #{n}" }
-    body { "Question details" }
-    category { "Housing" }
+    title { Faker::Lorem.sentence(word_count: 6).chomp(".") }
+    body { Faker::Lorem.paragraph(sentence_count: 3) }
+    category { Question::CATEGORIES.sample }
     status { :open }
   end
 end

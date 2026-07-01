@@ -4,8 +4,9 @@
 
   <span class="actions">
     <%= button_to "View",
-                  lawyer_question_path(question, as: "lawyer"),
+                  lawyer_question_path(question),
                   method: :get,
+                  params: { as: "lawyer" },
                   data: { turbo_frame: "_top" } %>
   </span>
 </li>

@@ -9,12 +9,15 @@ module Lawyer
       if @answer.save
         respond_to do |format|
           format.html do
-            redirect_to lawyer_questions_path(@question, as: "lawyer"),
+            redirect_to lawyer_questions_path(as: "lawyer"),
                         notice: "Answer submitted and payment request sent."
           end
         end
       else
-        render "lawyer/questions/show", status: :unprocessable_entity
+        respond_to do |format|
+          format.html { render "lawyer/questions/show", status: :unprocessable_entity }
+          format.turbo_stream { render "lawyer/questions/show", status: :unprocessable_entity }
+        end
       end
     end
 

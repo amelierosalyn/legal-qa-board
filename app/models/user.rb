@@ -5,4 +5,5 @@ class User < ApplicationRecord
   has_many :answers, foreign_key: :lawyer_id, dependent: :destroy
 
   validates :name, :email, :role, presence: true
+  validates :email, uniqueness: true
 end

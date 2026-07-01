@@ -5,6 +5,7 @@ class Answer < ApplicationRecord
 
   validates :response_text, presence: true
   validates :proposed_fee_pence, numericality: { greater_than: 0 }
+  validate :lawyer_must_have_lawyer_role
 
   attr_writer :proposed_fee_pounds
 
@@ -34,5 +35,9 @@ class Answer < ApplicationRecord
 
   def create_pending_payment_request
     create_payment_request!(status: :pending)
+  end
+
+  def lawyer_must_have_lawyer_role
+    errors.add(:base, "must be a lawyer") if lawyer.present? && !lawyer.lawyer?
   end
 end
