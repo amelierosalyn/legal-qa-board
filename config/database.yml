@@ -85,21 +85,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary:
-    <<: *default
-    url: <%= ENV["DATABASE_URL"] %>
-
-  cache:
-    <<: *primary
-    database: legal_advice_board_production_cache
-    migrations_paths: db/cache_migrate
-
-  queue:
-    <<: *primary
-    database: legal_advice_board_production_queue
-    migrations_paths: db/queue_migrate
-
-  cable:
-    <<: *primary
-    database: legal_advice_board_production_cable
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
