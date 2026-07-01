@@ -35,6 +35,7 @@ Development was roughly 75% manual and 25% AI-assisted via IDE code completion.
 
 * Applied simple formatting to questions and answers
 * Allowed questions to be deleted (own idea)
+* More robust validation - must be a lawyer to answer (own idea)
 
 ### With more time I would...
 
@@ -43,3 +44,4 @@ Development was roughly 75% manual and 25% AI-assisted via IDE code completion.
 * Accomplish further stretch goals
 * Refactor code to be more efficient, reduce db calls and rendering
 * Add a proper login system for users and lawyers
+* More tests
