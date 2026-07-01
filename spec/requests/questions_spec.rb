@@ -101,7 +101,7 @@ RSpec.describe "Questions", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include("prevented this question from being saved")
     end
   end

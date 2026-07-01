@@ -38,7 +38,7 @@ RSpec.describe "Lawyer::Answers", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include("prevented this answer from being saved")
     end
 
@@ -51,7 +51,7 @@ RSpec.describe "Lawyer::Answers", type: :request do
           }
         }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to include("must be a lawyer")
       end
     end

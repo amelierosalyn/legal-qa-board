@@ -23,7 +23,7 @@ class QuestionsController < ApplicationController
         end
       end
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -43,7 +43,7 @@ class QuestionsController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to questions_path, alert: "Question could not be deleted." }
-        format.turbo_stream { head :unprocessable_entity }
+        format.turbo_stream { head :unprocessable_content }
       end
     end
   end
@@ -67,7 +67,7 @@ class QuestionsController < ApplicationController
   rescue ActiveRecord::RecordInvalid # didn't save
     respond_to do |format|
       format.html { redirect_to questions_path, alert: "Question could not be closed." }
-      format.turbo_stream { head :unprocessable_entity }
+      format.turbo_stream { head :unprocessable_content }
     end
   end
 

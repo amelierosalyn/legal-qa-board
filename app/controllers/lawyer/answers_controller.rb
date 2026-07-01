@@ -15,8 +15,8 @@ module Lawyer
         end
       else
         respond_to do |format|
-          format.html { render "lawyer/questions/show", status: :unprocessable_entity }
-          format.turbo_stream { render "lawyer/questions/show", status: :unprocessable_entity }
+          format.html { render "lawyer/questions/show", status: :unprocessable_content }
+          format.turbo_stream { render "lawyer/questions/show", status: :unprocessable_content }
         end
       end
     end
