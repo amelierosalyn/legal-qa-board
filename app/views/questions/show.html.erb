@@ -1,8 +1,13 @@
 <h1><%= @question.title %></h1>
 
 <p>
+  <strong>Submitted:</strong>
+   <%= @question.created_at.strftime("%d %B %Y %H:%M") %>
+</p>
+
+<p>
   <strong>Category:</strong>
-  <%= @question.category %>
+  <%= @question.category.titleize %>
 </p>
 
 <p>

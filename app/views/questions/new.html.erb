@@ -20,7 +20,7 @@
 
   <div>
     <%= form.label :category %><br>
-    <%= form.select :category, Question::CATEGORIES.map { |c| [c.humanize, c] } %>
+    <%= form.select :category, Question::CATEGORIES.map { |c| [c.humanize, c] }.unshift(['Select a category', '']) %>
   </div>
 
   <div>

@@ -182,3 +182,8 @@ a:hover {
 .question_closed {
   background: #e5e7eb;
 }
+
+.submitted {
+  font-size: .85rem;
+  color: #6b7280;
+}

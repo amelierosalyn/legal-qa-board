@@ -1,5 +1,6 @@
 <li class="question_<%= question.status %>" id="<%= dom_id(question, dom_id_prefix) if local_assigns[:dom_id_prefix].present? %>">
   <%= question.category.titleize %> &gt; <strong><%= link_to question.title, question_path(question), data: { turbo_frame: "_top" } %></strong><br>
+  <span class="submitted">Submitted on <%= question.created_at.strftime("%d %B %Y at %H:%M") %></span><br>
   <strong><%= question.status.titleize %></strong>
   <% if current_user_question?(question) && question.answers_pending? %> — <%= pluralize(question.pending_answers_count, "answer") %> awaiting approval<% end %>
   <br>
