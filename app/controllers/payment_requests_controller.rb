@@ -3,14 +3,15 @@ class PaymentRequestsController < ApplicationController
     @payment_request = PaymentRequest
       .joins(answer: :question)
       .where(questions: { user: current_user })
-      .find(params[:id])
-    @payment_request.approve!
-    @answer = @payment_request&.answer
+      .find_by(id: params[:id])
 
-    if @answer.nil?
-      redirect_to root_path, alert: "Answer not found."
+    unless @payment_request
+      redirect_to root_path, alert: "Answer not found or access denied."
       return
     end
+
+    @payment_request.approve!
+    @answer = @payment_request.answer
 
     respond_to do |format|
       format.html do

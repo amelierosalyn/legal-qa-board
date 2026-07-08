@@ -35,5 +35,19 @@ RSpec.describe "PaymentRequests", type: :request do
       expect(response.body).to include('turbo-stream action="replace"')
       expect(response.body).to include(answer.response_text)
     end
+
+    context "when the payment request belongs to another user's question" do
+      let!(:other_client) { FactoryBot.create(:user, role: :client) }
+      let!(:other_question) { FactoryBot.create(:question, user: other_client, status: :open) }
+      let!(:other_answer) { FactoryBot.create(:answer, question: other_question, lawyer: lawyer) }
+      let!(:other_payment_request) { other_answer.create_payment_request!(status: :pending) }
+
+      it "redirects to root with an alert" do
+        patch approve_payment_request_path(other_payment_request)
+
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eq("Answer not found or access denied.")
+      end
+    end
   end
 end
