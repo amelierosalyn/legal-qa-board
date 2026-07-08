@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     # Temporary override to get around not having a proper login system
-    # TODO: Implement a proper login system
+    # NOTE: Authentication is intentionally simplified for this exercise
+    # In a production system this would likely use Devise with role-based authorisation
     email = params[:as] == "lawyer" ? "lawyer@example.com" : "client@example.com"
     @current_user ||= User.find_by!(email:)
   end
