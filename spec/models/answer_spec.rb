@@ -21,15 +21,14 @@ RSpec.describe Answer, type: :model do
   it { is_expected.to validate_presence_of(:response_text) }
   it { is_expected.to validate_numericality_of(:proposed_fee_pence).is_greater_than(0) }
 
-  it "creates a pending payment request after create" do
+  it "does not automatically create a payment request after create" do
     answer = FactoryBot.create(
       :answer,
       question: FactoryBot.create(:question, user: user),
       lawyer: lawyer
     )
 
-    expect(answer.payment_request).to be_present
-    expect(answer.payment_request).to be_pending
+    expect(answer.payment_request).to be_nil
   end
 
   it "converts the fee into pounds" do

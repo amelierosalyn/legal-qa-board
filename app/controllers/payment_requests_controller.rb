@@ -1,6 +1,9 @@
 class PaymentRequestsController < ApplicationController
   def approve
-    @payment_request = PaymentRequest.find(params[:id])
+    @payment_request = PaymentRequest
+      .joins(answer: :question)
+      .where(questions: { user: current_user })
+      .find(params[:id])
     @payment_request.approve!
     @answer = @payment_request&.answer
 

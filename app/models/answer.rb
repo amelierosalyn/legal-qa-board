@@ -4,13 +4,12 @@ class Answer < ApplicationRecord
   has_one :payment_request, dependent: :destroy
 
   validates :response_text, presence: true
-  validates :proposed_fee_pence, numericality: { greater_than: 0 }
+  validates :proposed_fee_pence, presence: true, numericality: { greater_than: 0 }
   validate :lawyer_must_have_lawyer_role
 
   attr_writer :proposed_fee_pounds
 
   before_validation :convert_pounds_to_pence
-  after_create :create_pending_payment_request
 
   def fee_in_pounds
     proposed_fee_pence / 100.0
@@ -31,10 +30,6 @@ class Answer < ApplicationRecord
     if @proposed_fee_pounds.present?
       self.proposed_fee_pence = (@proposed_fee_pounds.to_d * 100).round
     end
-  end
-
-  def create_pending_payment_request
-    create_payment_request!(status: :pending)
   end
 
   def lawyer_must_have_lawyer_role

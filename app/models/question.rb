@@ -4,13 +4,13 @@ class Question < ApplicationRecord
 
   enum :status, { open: 0, answered: 1, closed: 2 }
 
+  attribute :status, default: "open"
+
   belongs_to :user
   has_many :answers, dependent: :destroy
 
   validates :title, :body, :category, :status, presence: true
   validates :category, inclusion: { in: CATEGORIES }
-
-  after_initialize :set_status_to_open, if: :new_record?
 
   def answers_pending?
     pending_answers_count.positive?

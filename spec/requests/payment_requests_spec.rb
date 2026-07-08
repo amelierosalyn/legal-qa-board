@@ -11,16 +11,13 @@ RSpec.describe "PaymentRequests", type: :request do
     )
   end
   let!(:answer) do
-    FactoryBot.create(
-      :answer,
-      question: question,
-      lawyer: lawyer,
-    )
+    FactoryBot.create(:answer, question: question, lawyer: lawyer)
   end
+  let!(:payment_request) { answer.create_payment_request!(status: :pending) }
 
   describe "PATCH /payment_requests/:id/approve" do
     it "approves the payment and unlocks the answer for HTML requests" do
-      patch approve_payment_request_path(answer.payment_request)
+      patch approve_payment_request_path(payment_request)
 
       expect(response).to redirect_to(question_path(question))
       expect(answer.payment_request.reload).to be_approved
@@ -29,7 +26,7 @@ RSpec.describe "PaymentRequests", type: :request do
     end
 
     it "returns a turbo stream response when requested" do
-      patch approve_payment_request_path(answer.payment_request), headers: {
+      patch approve_payment_request_path(payment_request), headers: {
         "ACCEPT" => "text/vnd.turbo-stream.html"
       }
 

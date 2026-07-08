@@ -32,6 +32,7 @@ RSpec.describe "Questions", type: :request do
         question: question,
         lawyer: lawyer
       )
+      answer.create_payment_request!(status: :pending)
 
       get question_path(question)
 

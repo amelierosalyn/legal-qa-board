@@ -42,8 +42,21 @@ RSpec.describe "Lawyer::Answers", type: :request do
       expect(response.body).to include("prevented this answer from being saved")
     end
 
+    it "returns a 422 status when fee is blank on a turbo_stream request" do
+      post lawyer_question_answers_path(question, as: "lawyer"),
+        params: {
+          answer: {
+            response_text: "Advice text",
+            proposed_fee_pence: 0
+          }
+        },
+        headers: { "Accept" => "text/vnd.turbo-stream.html, text/html" }
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
     context 'when the user is not a lawyer' do
-      it "renders the question show template with errors" do
+      it "redirects to root with an alert" do
         post lawyer_question_answers_path(question), params: {
           answer: {
             response_text: "Any answer",
@@ -51,8 +64,7 @@ RSpec.describe "Lawyer::Answers", type: :request do
           }
         }
 
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include("must be a lawyer")
+        expect(response).to redirect_to(root_path)
       end
     end
   end
