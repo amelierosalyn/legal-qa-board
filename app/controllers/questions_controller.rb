@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.includes(answers: [ :lawyer, :payment_request ]).find(params[:id])
+    @question = current_user.questions.includes(answers: [ :lawyer, :payment_request ]).find(params[:id])
   end
 
   def new
