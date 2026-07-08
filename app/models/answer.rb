@@ -12,7 +12,7 @@ class Answer < ApplicationRecord
   before_validation :convert_pounds_to_pence
 
   def fee_in_pounds
-    proposed_fee_pence / 100.0
+    proposed_fee_pence.to_f / 100.0
   end
 
   def proposed_fee_pounds
